@@ -249,7 +249,7 @@ function FloralBand({ src, height = 230, opacity = 0.95 }: { src: string; height
         /* eslint-disable-next-line @next/next/no-img-element */
         <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "bottom", opacity }} />
       ) : (
-        <motion.img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "bottom", opacity, y }} />
+        <motion.img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "bottom", opacity, y, WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%, black 80%, transparent 100%)", maskImage: "linear-gradient(to bottom, transparent 0%, black 40%, black 80%, transparent 100%)" }} />
       )}
     </div>
   );
@@ -271,6 +271,8 @@ function SectionBg({ src, opacity = 0.55, parallax = false, drift = 40 }: { src:
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     opacity,
+    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+    maskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
   };
 
   if (!parallax || reduce) {
@@ -302,7 +304,9 @@ function Hero() {
         paddingRight: 24,
       }}
     >
-      <SectionBg src="/floral/bg-vestimenta.webp" opacity={0.95} parallax drift={24} />
+      <WindFlowers src="/floral/hero-top.webp" edge="top" />
+      <WindFlowers src="/floral/hero-bottom.webp" edge="bottom" />
+      <Petals />
 
       <motion.div
         style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -455,20 +459,6 @@ function Hero() {
       <Countdown />
       </motion.div>
 
-      {/* Dissolve inferior — se estira hacia arriba */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 120,
-          background: `linear-gradient(to bottom, transparent, ${C.cream})`,
-          zIndex: 2,
-          pointerEvents: "none",
-        }}
-      />
     </section>
   );
 }
@@ -552,10 +542,7 @@ function Frase() {
     <Section style={{ paddingTop: 88, paddingBottom: 88, position: "relative", overflow: "hidden" }}>
       <SectionBg src="/floral/bg-frase.webp" opacity={0.5} parallax drift={50} />
 
-      {/* Dissolve superior */}
-      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 90, background: `linear-gradient(to bottom, ${C.cream}, transparent)`, zIndex: 1, pointerEvents: "none" }} />
       {/* Dissolve inferior */}
-      <div aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: `linear-gradient(to top, ${C.cream}, transparent)`, zIndex: 1, pointerEvents: "none" }} />
 
       <Reveal style={{ position: "relative", zIndex: 1, maxWidth: 520, margin: "0 auto" }}>
         <RevealItem>
@@ -708,8 +695,8 @@ function Footer() {
           opacity: 0.6,
           pointerEvents: "none",
           zIndex: 0,
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 55%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 55%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 55%, black 88%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 55%, black 88%, transparent 100%)",
         }}
       />
 
@@ -920,6 +907,90 @@ function AuraBg() {
             background: `radial-gradient(circle, ${b.c} 0%, transparent 68%)`,
             animationDuration: `${b.d}s`,
             animationDelay: `${-i * 4}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* Flores del hero mecidas por el viento: la banda se divide en 3 rebanadas con bordes
+   difuminados; cada una se mece desde su base (arriba cuelgan, abajo crecen) con
+   tiempos distintos → movimiento orgánico. Entran "creciendo" y tienen parallax. */
+function WindFlowers({ src, edge }: { src: string; edge: "top" | "bottom" }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], edge === "top" ? [0, -60] : [0, 50]);
+  const vFade = edge === "top"
+    ? "linear-gradient(to bottom, black 0%, black 55%, transparent 100%)"
+    : "linear-gradient(to top, black 0%, black 55%, transparent 100%)";
+  const slices = [
+    { h: "linear-gradient(to right, black 0%, black 30%, transparent 46%)", d: 7.5, delay: 0 },
+    { h: "linear-gradient(to right, transparent 24%, black 40%, black 60%, transparent 76%)", d: 9, delay: -2.5 },
+    { h: "linear-gradient(to right, transparent 54%, black 70%, black 100%)", d: 8.2, delay: -5 },
+  ];
+  return (
+    <motion.div
+      ref={ref}
+      aria-hidden="true"
+      initial={reduce ? undefined : { opacity: 0, scaleY: 0.55 }}
+      animate={reduce ? undefined : { opacity: 1, scaleY: 1 }}
+      transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay: edge === "top" ? 0.15 : 0.45 }}
+      style={{
+        position: "absolute",
+        left: "-4%",
+        right: "-4%",
+        [edge]: 0,
+        height: "clamp(190px, 34vh, 340px)",
+        transformOrigin: edge === "top" ? "top center" : "bottom center",
+        pointerEvents: "none",
+        zIndex: 0,
+        y: reduce ? 0 : y,
+      }}
+    >
+      {slices.map((sl, i) => (
+        <div
+          key={i}
+          className={reduce ? undefined : `wind-sway wind-${edge}`}
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: `url(${src})`,
+            backgroundSize: "cover",
+            backgroundPosition: edge === "top" ? "center top" : "center bottom",
+            mixBlendMode: "multiply",
+            animationDuration: `${sl.d}s`,
+            animationDelay: `${sl.delay}s`,
+            WebkitMaskImage: `${sl.h}, ${vFade}`,
+            maskImage: `${sl.h}, ${vFade}`,
+            WebkitMaskComposite: "source-in",
+            maskComposite: "intersect",
+          }}
+        />
+      ))}
+    </motion.div>
+  );
+}
+
+/* Pétalos que caen suavemente en el hero */
+function Petals() {
+  const reduce = useReducedMotion();
+  if (reduce) return null;
+  const colors = ["#F08CA0", "#D41F7F", "#F8B91A", "#EE4E22", "#F5B6C4"];
+  return (
+    <div aria-hidden="true" style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 1 }}>
+      {Array.from({ length: 12 }).map((_, i) => (
+        <span
+          key={i}
+          className="petal"
+          style={{
+            left: `${(i * 37) % 100}%`,
+            background: colors[i % colors.length],
+            width: 8 + (i % 3) * 3,
+            height: 11 + (i % 3) * 4,
+            animationDuration: `${11 + (i % 5) * 2.3}s`,
+            animationDelay: `${-i * 1.7}s`,
           }}
         />
       ))}

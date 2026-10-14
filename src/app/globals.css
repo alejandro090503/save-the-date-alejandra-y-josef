@@ -229,3 +229,12 @@ body {
 .flor-btn::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid #F08CA0;opacity:0}
 .flor-btn.is-playing::after{animation:ring 2s ease-out infinite}
 @media (prefers-reduced-motion: reduce){.aura-blob,.photo-float,.photo-halo,.photo-kenburns,.photo-sheen,.heart-beat,.heart-ring,.arch-ring,.flor-btn,.flor-btn img{animation:none!important}}
+
+/* Viento en las flores del hero */
+.wind-sway{animation-name:windSway;animation-timing-function:cubic-bezier(.45,.05,.55,.95);animation-iteration-count:infinite;animation-direction:alternate;will-change:transform}
+.wind-top{transform-origin:50% 0%}
+.wind-bottom{transform-origin:50% 100%}
+@keyframes windSway{0%{transform:skewX(-2.2deg) scale(1.01)}50%{transform:skewX(1.4deg) scale(1.03) translateX(4px)}100%{transform:skewX(2.4deg) scale(1.015) translateX(-3px)}}
+.petal{position:absolute;top:-6%;border-radius:80% 0 80% 0;opacity:.55;animation-name:petalFall;animation-timing-function:linear;animation-iteration-count:infinite;filter:blur(.3px)}
+@keyframes petalFall{0%{transform:translate(0,-10vh) rotate(0deg)}25%{transform:translate(18px,25vh) rotate(90deg)}50%{transform:translate(-14px,55vh) rotate(200deg)}75%{transform:translate(20px,85vh) rotate(290deg)}100%{transform:translate(-6px,115vh) rotate(380deg);opacity:0}}
+@media (prefers-reduced-motion: reduce){.wind-sway,.petal{animation:none!important}}
