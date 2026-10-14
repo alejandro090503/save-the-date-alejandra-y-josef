@@ -118,7 +118,7 @@ function Divider({ tone = C.mauve }: { tone?: string }) {
     <div
       className="flex items-center justify-center"
       style={{
-        backgroundColor: C.cream,
+        backgroundColor: "transparent",
         paddingTop: 24,
         paddingBottom: 24,
       }}
@@ -294,7 +294,7 @@ function Hero() {
         position: "relative",
         overflow: "hidden",
         minHeight: "100vh",
-        backgroundColor: C.cream,
+        backgroundColor: "transparent",
         justifyContent: "center",
         paddingTop: "clamp(56px, 10vh, 88px)",
         paddingBottom: "clamp(48px, 8vh, 80px)",
@@ -302,8 +302,7 @@ function Hero() {
         paddingRight: 24,
       }}
     >
-      <FloralSide src="/floral/rail-left-wild.webp" side="left" width={170} opacity={0.85} drift={30} />
-      <FloralSide src="/floral/rail-right-wild.webp" side="right" width={170} opacity={0.85} drift={30} />
+      <SectionBg src="/floral/bg-vestimenta.webp" opacity={0.95} parallax drift={24} />
 
       <motion.div
         style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -329,26 +328,28 @@ function Hero() {
       {/* Nombres apilados */}
       <h1
         style={{
-          fontFamily: "var(--font-heading)",
-          fontWeight: 700,
-          fontSize: "clamp(2.8rem, 14vw, 7.5rem)",
-          letterSpacing: "0.12em",
-          color: C.black,
-          lineHeight: 1,
+          fontFamily: "var(--font-script)",
+          fontWeight: 400,
+          fontSize: "clamp(4.4rem, 21vw, 8.5rem)",
+          letterSpacing: "0",
+          color: C.wineDeep,
+          lineHeight: 1.05,
+          textShadow: "0 2px 18px rgba(250,248,245,.9)",
           textAlign: "center",
           margin: 0,
         }}
       >
-        ALEJANDRA
+        Alejandra
       </h1>
 
       <p
         aria-hidden="true"
         style={{
-          fontFamily: "var(--font-ampersand)",
-          fontWeight: 400,
-          fontSize: "clamp(4rem, 16vw, 8rem)",
-          color: C.wine,
+          fontFamily: "var(--font-heading)",
+          fontStyle: "italic",
+          fontWeight: 600,
+          fontSize: "clamp(2.4rem, 10vw, 4rem)",
+          color: C.gold,
           lineHeight: 0.9,
           margin: "clamp(-8px, -1vw, 0px) 0",
         }}
@@ -358,17 +359,18 @@ function Hero() {
 
       <h1
         style={{
-          fontFamily: "var(--font-heading)",
-          fontWeight: 700,
-          fontSize: "clamp(2.8rem, 14vw, 7.5rem)",
-          letterSpacing: "0.12em",
-          color: C.black,
-          lineHeight: 1,
+          fontFamily: "var(--font-script)",
+          fontWeight: 400,
+          fontSize: "clamp(4.4rem, 21vw, 8.5rem)",
+          letterSpacing: "0",
+          color: C.wineDeep,
+          lineHeight: 1.05,
+          textShadow: "0 2px 18px rgba(250,248,245,.9)",
           textAlign: "center",
           margin: 0,
         }}
       >
-        JOSEF
+        Josef
       </h1>
 
       {/* Texto de invitación */}
@@ -488,7 +490,7 @@ function Section({
       id={id}
       className="text-center"
       style={{
-        backgroundColor: bg,
+        backgroundColor: bg === C.cream ? "transparent" : bg,
         paddingTop: 88,
         paddingBottom: 88,
         paddingLeft: 24,
@@ -633,57 +635,45 @@ function Mensaje() {
 /* ═══════════════════════════════════════════════════════
    PHOTO DIVIDER — Foto entre secciones (sustituye al divider ornamental)
    ═══════════════════════════════════════════════════════ */
-function PhotoDivider({ src, aspect = "16 / 10", tone = C.gold }: { src: string; aspect?: string; tone?: string }) {
+function PhotoDivider({ src, aspect = "16 / 10", tone = C.gold, delay = 0 }: { src: string; aspect?: string; tone?: string; delay?: number }) {
+  const reduce = useReducedMotion();
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    setTilt({ x: ((e.clientY - r.top) / r.height - 0.5) * -10, y: ((e.clientX - r.left) / r.width - 0.5) * 10 });
+  };
   return (
-    <div
-      aria-hidden="true"
-      style={{
-        backgroundColor: C.cream,
-        padding: "48px 24px",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <figure
-        style={{
-          margin: 0,
-          width: "100%",
-          maxWidth: 380,
-          position: "relative",
-        }}
+    <div aria-hidden="true" style={{ padding: "56px 28px", display: "flex", justifyContent: "center", position: "relative", zIndex: 1 }}>
+      <motion.figure
+        initial={reduce ? undefined : { opacity: 0, y: 50, scale: 0.92 }}
+        whileInView={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ type: "spring", stiffness: 70, damping: 14 }}
+        style={{ margin: 0, width: "100%", maxWidth: 360, perspective: 900 }}
       >
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: aspect,
-            overflow: "hidden",
-            boxShadow: "0 2px 22px rgba(13,13,13,0.08)",
-            border: `2px solid ${tone}`,
-          }}
-        >
-          {/* Esquinas decorativas en el color de la sección siguiente */}
-          <div style={{ position: "absolute", top: 8, left: 8, width: 16, height: 16, borderTop: `2px solid ${C.white}`, borderLeft: `2px solid ${C.white}`, opacity: 0.9, zIndex: 2 }} />
-          <div style={{ position: "absolute", top: 8, right: 8, width: 16, height: 16, borderTop: `2px solid ${C.white}`, borderRight: `2px solid ${C.white}`, opacity: 0.9, zIndex: 2 }} />
-          <div style={{ position: "absolute", bottom: 8, left: 8, width: 16, height: 16, borderBottom: `2px solid ${C.white}`, borderLeft: `2px solid ${C.white}`, opacity: 0.9, zIndex: 2 }} />
-          <div style={{ position: "absolute", bottom: 8, right: 8, width: 16, height: 16, borderBottom: `2px solid ${C.white}`, borderRight: `2px solid ${C.white}`, opacity: 0.9, zIndex: 2 }} />
-
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src}
-            alt=""
-            loading="lazy"
+        <div className="photo-float" style={{ animationDelay: `${delay}s` }}>
+          <div
+            onPointerMove={onMove}
+            onPointerLeave={() => setTilt({ x: 0, y: 0 })}
             style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center",
-              display: "block",
-              filter: "saturate(0.9) contrast(1.02)",
+              position: "relative",
+              transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+              transition: "transform .35s cubic-bezier(.22,1,.36,1)",
+              transformStyle: "preserve-3d",
             }}
-          />
+          >
+            {/* halo de color que respira detrás */}
+            <div className="photo-halo" style={{ background: `radial-gradient(circle at 30% 30%, ${C.mauveLight}, transparent 60%), radial-gradient(circle at 75% 70%, ${C.oliveLight}, transparent 55%), radial-gradient(circle at 70% 20%, ${C.goldLight}, transparent 50%)` }} />
+            <div style={{ position: "relative", padding: 10, background: "#fffdf9", borderRadius: 6, boxShadow: "0 18px 40px -12px rgba(140,17,73,.35), 0 4px 14px rgba(13,13,13,.08)" }}>
+              <div style={{ position: "relative", width: "100%", aspectRatio: aspect, overflow: "hidden", borderRadius: 3, outline: `1.5px solid ${tone}`, outlineOffset: 4 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="" loading="lazy" className="photo-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                <div className="photo-sheen" />
+              </div>
+            </div>
+          </div>
         </div>
-      </figure>
+      </motion.figure>
     </div>
   );
 }
@@ -698,7 +688,7 @@ function Footer() {
       style={{
         position: "relative",
         overflow: "hidden",
-        backgroundColor: C.cream,
+        backgroundColor: "transparent",
         padding: "76px 24px clamp(150px, 34vw, 260px)",
       }}
     >
@@ -726,6 +716,17 @@ function Footer() {
       <div style={{ position: "relative", zIndex: 1 }}>
       <Reveal>
         {/* Ornamento floral dorado */}
+        <RevealItem>
+          <div className="photo-float" style={{ width: "min(240px, 62vw)", margin: "0 auto 34px", position: "relative" }}>
+            <div className="arch-ring" />
+            <div style={{ position: "relative", aspectRatio: "3 / 4", borderRadius: "999px 999px 14px 14px", overflow: "hidden", border: "6px solid #fffdf9", boxShadow: "0 20px 44px -14px rgba(140,17,73,.45)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/fotos/foto5.webp" alt="Alejandra y Josef" loading="lazy" className="photo-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%", display: "block" }} />
+              <div className="photo-sheen" />
+            </div>
+          </div>
+        </RevealItem>
+
         <RevealItem>
           <svg viewBox="0 0 260 44" fill="none" aria-hidden="true" style={{ display: "block", margin: "0 auto 26px", width: "min(230px, 62vw)", height: "auto" }}>
             <g stroke={C.gold} strokeWidth="0.9" fill="none" opacity="0.85">
@@ -856,14 +857,18 @@ function Calendario() {
                   color: d === 17 ? C.white : C.charcoal,
                   lineHeight: "36px",
                   height: 36,
+                  display: "block",
                 }}
               >
                 {d === 17 && (
-                  <svg viewBox="0 0 24 24" aria-hidden="true" style={{ position: "absolute", inset: -4, width: "calc(100% + 8px)", height: 44, zIndex: -1 }}>
-                    <path d="M12 21.6C6.4 16.1 1 11.3 1 7.2 1 3.4 4.1 2 6.3 2c1.3 0 4.2.5 5.7 4.5C13.6 2.5 16.5 2 17.7 2 20.3 2 23 3.6 23 7.2c0 4.1-5.1 8.6-11 14.4z" fill={C.wine} />
-                  </svg>
+                  <span aria-hidden="true" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 0 }}>
+                    <svg className="heart-beat" viewBox="0 0 24 24" style={{ width: 44, height: 44, overflow: "visible" }}>
+                      <path d="M12 21.6C6.4 16.1 1 11.3 1 7.2 1 3.4 4.1 2 6.3 2c1.3 0 4.2.5 5.7 4.5C13.6 2.5 16.5 2 17.7 2 20.3 2 23 3.6 23 7.2c0 4.1-5.1 8.6-11 14.4z" fill={C.wine} transform="translate(0 1.2)" />
+                    </svg>
+                    <span className="heart-ring" />
+                  </span>
                 )}
-                <span style={{ position: "relative" }}>{d}</span>
+                <span style={{ position: "relative", zIndex: 1 }}>{d}</span>
               </span>
             ))}
           </div>
@@ -878,15 +883,46 @@ function Calendario() {
    ═══════════════════════════════════════════════════════ */
 export function InvitationClient() {
   return (
-    <main style={{ backgroundColor: C.cream, width: "100%" }}>
+    <main style={{ backgroundColor: C.cream, width: "100%", position: "relative", isolation: "isolate" }}>
+      <AuraBg />
       <Hero />
       <PhotoDivider src="/fotos/foto1.webp" aspect="4 / 5" tone={C.wine} />
       <Frase />
       <Calendario />
-      <PhotoDivider src="/fotos/foto4.webp" aspect="4 / 5" tone={C.gold} />
+      <PhotoDivider src="/fotos/foto4.webp" aspect="4 / 5" tone={C.gold} delay={1.4} />
       <Mensaje />
       <Divider tone={C.mauve} />
       <Footer />
     </main>
+  );
+}
+
+/* Fondo vivo: esferas difuminadas de la paleta que derivan lentamente (fijo detrás de todo) */
+function AuraBg() {
+  const blobs = [
+    { c: "#F08CA0", s: 62, x: "-12%", y: "4%", d: 22 },
+    { c: "#F8B91A", s: 48, x: "62%", y: "18%", d: 26 },
+    { c: "#D41F7F", s: 44, x: "8%", y: "58%", d: 30 },
+    { c: "#EE4E22", s: 40, x: "70%", y: "70%", d: 24 },
+    { c: "#A3AD72", s: 46, x: "30%", y: "34%", d: 34 },
+  ];
+  return (
+    <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: -1, overflow: "hidden", pointerEvents: "none" }}>
+      {blobs.map((b, i) => (
+        <span
+          key={i}
+          className="aura-blob"
+          style={{
+            left: b.x,
+            top: b.y,
+            width: `${b.s}vmax`,
+            height: `${b.s}vmax`,
+            background: `radial-gradient(circle, ${b.c} 0%, transparent 68%)`,
+            animationDuration: `${b.d}s`,
+            animationDelay: `${-i * 4}s`,
+          }}
+        />
+      ))}
+    </div>
   );
 }

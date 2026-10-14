@@ -202,3 +202,30 @@ body {
   .vinyl-btn::after { animation: none; }
 }
 
+
+/* ===== Save the Date: vida ===== */
+.aura-blob{position:absolute;border-radius:50%;opacity:.22;filter:blur(40px);animation-name:auraDrift;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate;will-change:transform}
+@keyframes auraDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(12vw,-8vh) scale(1.15)}66%{transform:translate(-10vw,10vh) scale(.9)}100%{transform:translate(6vw,4vh) scale(1.08)}}
+.photo-float{animation:photoFloat 6s ease-in-out infinite}
+@keyframes photoFloat{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-14px) rotate(.6deg)}}
+.photo-halo{position:absolute;inset:-22px;border-radius:24px;filter:blur(26px);opacity:.55;animation:haloPulse 5s ease-in-out infinite;z-index:-1}
+@keyframes haloPulse{0%,100%{opacity:.4;transform:scale(.96)}50%{opacity:.7;transform:scale(1.04)}}
+.photo-kenburns{animation:kenburns 14s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08)}}
+.photo-sheen{position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);background-size:250% 100%;animation:sheen 7s ease-in-out infinite;pointer-events:none;mix-blend-mode:soft-light}
+@keyframes sheen{0%,60%{background-position:150% 0}100%{background-position:-50% 0}}
+.heart-beat{animation:heartBeat 1.3s ease-in-out infinite;transform-origin:center;filter:drop-shadow(0 3px 6px rgba(176,23,95,.4))}
+@keyframes heartBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(1)}45%{transform:scale(1.12)}60%{transform:scale(1)}}
+.heart-ring{position:absolute;width:40px;height:40px;border-radius:50%;border:2px solid #D41F7F;animation:ring 1.3s ease-out infinite;opacity:0}
+@keyframes ring{0%{transform:scale(.6);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+.arch-ring{position:absolute;inset:-14px;border-radius:999px 999px 24px 24px;background:conic-gradient(from 0deg,#D41F7F,#F08CA0,#F8B91A,#EE4E22,#7F8B4E,#D41F7F);filter:blur(10px);opacity:.55;animation:spinHue 9s linear infinite}
+@keyframes spinHue{to{filter:blur(10px) hue-rotate(360deg)}}
+/* Botón de música floral */
+.flor-btn{position:fixed;right:18px;bottom:18px;z-index:60;width:64px;height:64px;border-radius:50%;border:3px solid #fffdf9;padding:0;cursor:pointer;background:#fffdf9;box-shadow:0 8px 22px -6px rgba(140,17,73,.5);animation:photoFloat 4s ease-in-out infinite}
+.flor-btn img{width:100%;height:100%;border-radius:50%;display:block}
+.flor-btn.is-playing img{animation:florSpin 9s linear infinite}
+@keyframes florSpin{to{transform:rotate(360deg)}}
+.flor-btn .flor-icon{position:absolute;right:-4px;bottom:-4px;width:24px;height:24px;border-radius:50%;background:#B0175F;display:flex;align-items:center;justify-content:center;border:2px solid #fffdf9}
+.flor-btn::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid #F08CA0;opacity:0}
+.flor-btn.is-playing::after{animation:ring 2s ease-out infinite}
+@media (prefers-reduced-motion: reduce){.aura-blob,.photo-float,.photo-halo,.photo-kenburns,.photo-sheen,.heart-beat,.heart-ring,.arch-ring,.flor-btn,.flor-btn img{animation:none!important}}

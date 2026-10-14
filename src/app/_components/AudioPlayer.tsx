@@ -58,31 +58,18 @@ const AudioPlayer = forwardRef<AudioAPI>(function AudioPlayer(_props, ref) {
       <button
         onClick={toggle}
         aria-label={playing ? "Pausar música" : "Reproducir música"}
-        className={`vinyl-btn ${visible ? "is-ready" : ""} ${playing ? "is-playing" : ""}`}
+        className={`flor-btn ${playing ? "is-playing" : ""}`}
         type="button"
       >
-        <div className="vinyl-tonearm">
-          <div className="vinyl-tonearm-pivot" />
-          <div className="vinyl-tonearm-line" />
-          <div className="vinyl-tonearm-head" />
-        </div>
-        <div className="vinyl-spin">
-          <div className="vinyl-disc">
-            <div className="vinyl-sheen" />
-            <div className="vinyl-label-text">
-              AJ<small>2027</small>
-            </div>
-            <div className="vinyl-hole" />
-          </div>
-        </div>
-        <div className="vinyl-icons">
-          <svg className="vinyl-icon-play" viewBox="0 0 24 24" fill="#FAF8F5" aria-hidden="true">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-          <svg className="vinyl-icon-pause" viewBox="0 0 24 24" fill="#FAF8F5" aria-hidden="true">
-            <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
-          </svg>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/flor-play.png" alt="" />
+        <span className="flor-icon" aria-hidden="true">
+          {playing ? (
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
+          ) : (
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z" /></svg>
+          )}
+        </span>
       </button>
     </>
   );
