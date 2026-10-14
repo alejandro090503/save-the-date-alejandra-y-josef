@@ -679,26 +679,7 @@ function Footer() {
         padding: "76px 24px clamp(150px, 34vw, 260px)",
       }}
     >
-      {/* Borde floral inferior — pradera de flores silvestres */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: "clamp(150px, 34vw, 300px)",
-          backgroundImage: "url(/floral/bg-footer.webp)",
-          backgroundSize: "cover",
-          backgroundPosition: "center bottom",
-          backgroundRepeat: "no-repeat",
-          opacity: 0.6,
-          pointerEvents: "none",
-          zIndex: 0,
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 55%, black 88%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 55%, black 88%, transparent 100%)",
-        }}
-      />
+      <WindFlowers src="/floral/bg-footer.webp" edge="bottom" height="clamp(170px, 38vw, 300px)" opacity={0.75} inView />
 
       <div style={{ position: "relative", zIndex: 1 }}>
       <Reveal>
@@ -823,7 +804,7 @@ function Calendario() {
   const lead = 4; // 1 jul 2027 = jueves (L M M J V S D)
   return (
     <Section style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: "clamp(170px, 34vw, 230px)" }}>
-      <FloralBand src="/floral/bottom-band.webp" height={200} opacity={0.85} />
+      <WindFlowers src="/floral/bottom-band.webp" edge="bottom" height="clamp(170px, 34vw, 230px)" opacity={0.9} inView />
       <Reveal style={{ position: "relative", zIndex: 1, maxWidth: 340, margin: "0 auto" }}>
         <RevealItem>
           <SectionTitle eyebrow="Sábado" title="JULIO 2027" tone={C.gold} />
@@ -917,11 +898,11 @@ function AuraBg() {
 /* Flores del hero mecidas por el viento: la banda se divide en 3 rebanadas con bordes
    difuminados; cada una se mece desde su base (arriba cuelgan, abajo crecen) con
    tiempos distintos → movimiento orgánico. Entran "creciendo" y tienen parallax. */
-function WindFlowers({ src, edge }: { src: string; edge: "top" | "bottom" }) {
+function WindFlowers({ src, edge, height, opacity = 1, inView = false }: { src: string; edge: "top" | "bottom"; height?: string; opacity?: number; inView?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], edge === "top" ? [0, -60] : [0, 50]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: inView ? ["start end", "end start"] : ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], inView ? [24, -12] : edge === "top" ? [0, -60] : [0, 50]);
   const vFade = edge === "top"
     ? "linear-gradient(to bottom, black 0%, black 50%, transparent 100%)"
     : "linear-gradient(to top, transparent 0%, black 26%, black 58%, transparent 100%)";
@@ -935,14 +916,16 @@ function WindFlowers({ src, edge }: { src: string; edge: "top" | "bottom" }) {
       ref={ref}
       aria-hidden="true"
       initial={reduce ? undefined : { opacity: 0, scaleY: 0.55 }}
-      animate={reduce ? undefined : { opacity: 1, scaleY: 1 }}
-      transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay: edge === "top" ? 0.15 : 0.45 }}
+      animate={reduce || inView ? undefined : { opacity, scaleY: 1 }}
+      whileInView={reduce || !inView ? undefined : { opacity, scaleY: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay: inView ? 0.1 : edge === "top" ? 0.15 : 0.45 }}
       style={{
         position: "absolute",
         left: "-4%",
         right: "-4%",
         [edge]: 0,
-        height: edge === "top" ? "clamp(170px, 26vh, 300px)" : "clamp(200px, 30vh, 320px)",
+        height: height ?? (edge === "top" ? "clamp(170px, 26vh, 300px)" : "clamp(200px, 30vh, 320px)"),
         transformOrigin: edge === "top" ? "top center" : "bottom center",
         pointerEvents: "none",
         zIndex: 0,

@@ -1,11 +1,10 @@
 import { InvitationClient } from "./_components/InvitationClient";
-import AudioPlayer from "./_components/AudioPlayer";
+import { Loader } from "./_components/Loader";
 
 export default function Page() {
   return (
-    <>
-      <AudioPlayer />
+    <Loader>
       <InvitationClient />
-    </>
+    </Loader>
   );
 }
