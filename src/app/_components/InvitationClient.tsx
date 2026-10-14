@@ -271,8 +271,8 @@ function SectionBg({ src, opacity = 0.55, parallax = false, drift = 40 }: { src:
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     opacity,
-    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
-    maskImage: "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%)",
+    maskImage: "linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%)",
   };
 
   if (!parallax || reduce) {
@@ -298,8 +298,8 @@ function Hero() {
         minHeight: "100vh",
         backgroundColor: "transparent",
         justifyContent: "center",
-        paddingTop: "clamp(56px, 10vh, 88px)",
-        paddingBottom: "clamp(48px, 8vh, 80px)",
+        paddingTop: "clamp(130px, 18vh, 190px)",
+        paddingBottom: "clamp(170px, 24vh, 240px)",
         paddingLeft: 24,
         paddingRight: 24,
       }}
@@ -923,8 +923,8 @@ function WindFlowers({ src, edge }: { src: string; edge: "top" | "bottom" }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], edge === "top" ? [0, -60] : [0, 50]);
   const vFade = edge === "top"
-    ? "linear-gradient(to bottom, black 0%, black 55%, transparent 100%)"
-    : "linear-gradient(to top, black 0%, black 55%, transparent 100%)";
+    ? "linear-gradient(to bottom, black 0%, black 50%, transparent 100%)"
+    : "linear-gradient(to top, transparent 0%, black 26%, black 58%, transparent 100%)";
   const slices = [
     { h: "linear-gradient(to right, black 0%, black 30%, transparent 46%)", d: 7.5, delay: 0 },
     { h: "linear-gradient(to right, transparent 24%, black 40%, black 60%, transparent 76%)", d: 9, delay: -2.5 },
@@ -942,7 +942,7 @@ function WindFlowers({ src, edge }: { src: string; edge: "top" | "bottom" }) {
         left: "-4%",
         right: "-4%",
         [edge]: 0,
-        height: "clamp(190px, 34vh, 340px)",
+        height: edge === "top" ? "clamp(170px, 26vh, 300px)" : "clamp(200px, 30vh, 320px)",
         transformOrigin: edge === "top" ? "top center" : "bottom center",
         pointerEvents: "none",
         zIndex: 0,
