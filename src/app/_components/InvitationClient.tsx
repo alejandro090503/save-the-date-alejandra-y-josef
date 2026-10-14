@@ -834,9 +834,8 @@ function Calendario() {
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const lead = 4; // 1 jul 2027 = jueves (L M M J V S D)
   return (
-    <Section style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: 64 }}>
-      <FloralSide src="/floral/rail-left-meadow.webp" side="left" width={130} opacity={0.75} drift={36} />
-      <FloralSide src="/floral/rail-right-meadow.webp" side="right" width={130} opacity={0.75} drift={36} />
+    <Section style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: "clamp(170px, 34vw, 230px)" }}>
+      <FloralBand src="/floral/bottom-band.webp" height={200} opacity={0.85} />
       <Reveal style={{ position: "relative", zIndex: 1, maxWidth: 340, margin: "0 auto" }}>
         <RevealItem>
           <SectionTitle eyebrow="Sábado" title="JULIO 2027" tone={C.gold} />
