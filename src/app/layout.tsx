@@ -40,13 +40,13 @@ export const metadata: Metadata = {
     siteName: "Save the Date Alejandra & Josef",
     locale: "es_MX",
     type: "website",
-    images: [{ url: "https://save-the-date-alejandra-y-josef.vercel.app/og-image.jpg", width: 1200, height: 630, alt: "Save the Date Alejandra & Josef" }],
+    images: [{ url: "https://save-the-date-alejandra-y-josef.vercel.app/og-image.jpg?v=2", width: 1200, height: 630, alt: "Save the Date Alejandra & Josef" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Save the Date · Alejandra & Josef — 17 Julio 2027",
     description: "Reserva la fecha: 17 de julio de 2027 · Ciudad de México.",
-    images: ["https://save-the-date-alejandra-y-josef.vercel.app/og-image.jpg"],
+    images: ["https://save-the-date-alejandra-y-josef.vercel.app/og-image.jpg?v=2"],
   },
 };
 
