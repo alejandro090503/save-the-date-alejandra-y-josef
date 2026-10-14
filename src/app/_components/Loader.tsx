@@ -50,12 +50,12 @@ export function Loader({ children }: { children: React.ReactNode }) {
           onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && enter()}
         >
           <div className="ld-half ld-top">
-            <img className="ld-rose ld-tl" src="/floral/ld-tl.webp" alt="" />
-            <img className="ld-rose ld-tr" src="/floral/ld-tr.webp" alt="" />
+            <img className="ld-rose ld-tl" src="/floral/ld-tl.webp?v=2" alt="" />
+            <img className="ld-rose ld-tr" src="/floral/ld-tr.webp?v=2" alt="" />
           </div>
           <div className="ld-half ld-bottom">
-            <img className="ld-rose ld-bl" src="/floral/ld-bl.webp" alt="" />
-            <img className="ld-rose ld-br" src="/floral/ld-br.webp" alt="" />
+            <img className="ld-rose ld-bl" src="/floral/ld-bl.webp?v=2" alt="" />
+            <img className="ld-rose ld-br" src="/floral/ld-br.webp?v=2" alt="" />
           </div>
           <div className="ld-sparkles" aria-hidden="true">
             {Array.from({ length: 14 }).map((_, i) => (
