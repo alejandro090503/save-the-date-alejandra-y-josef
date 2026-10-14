@@ -308,5 +308,5 @@ body {
 .ld-sparkles i{position:absolute;width:5px;height:5px;border-radius:50%;background:radial-gradient(circle,#fff6d6 0%,#F8B91A 45%,transparent 70%);opacity:0;animation:twinkle 3.2s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.9;transform:scale(1.4)}}
 .ld.is-opening .ld-sparkles{opacity:0}
-.ld-mono span:last-child{transform:translateY(-.07em) scale(.94);transform-origin:50% 0}
+.ld-mono span:last-child{transform:translateY(-.15em) scale(.8);transform-origin:50% 100%}
 .ld-mono em{transform:translateY(.1em)}
