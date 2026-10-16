@@ -58,13 +58,13 @@ export function Loader({ children }: { children: React.ReactNode }) {
       {!gone && (
         <div className={`ld ${ready ? "is-ready" : ""} ${opening ? "is-opening" : ""}`}>
           <div className="ld-half ld-top">
-            <img className="ld-flor ld-tl" src="/floral/yel-c-l.webp" alt="" />
-            <img className="ld-flor ld-tr" src="/floral/yel-c.webp" alt="" />
+            <img className="ld-flor ld-tl" src="/floral/yel-c-l.webp?v=2" alt="" />
+            <img className="ld-flor ld-tr" src="/floral/yel-c.webp?v=2" alt="" />
           </div>
           <div className="ld-half ld-bottom">
             <div className="ld-meadow" />
-            <img className="ld-flor ld-bl" src="/floral/bop-a.webp" alt="" />
-            <img className="ld-flor ld-br" src="/floral/bop-b.webp" alt="" />
+            <img className="ld-flor ld-bl" src="/floral/bop-a.webp?v=2" alt="" />
+            <img className="ld-flor ld-br" src="/floral/bop-b.webp?v=2" alt="" />
           </div>
           <div className="ld-sparkles" aria-hidden="true">
             {Array.from({ length: 14 }).map((_, i) => (

@@ -310,8 +310,8 @@ function Hero() {
     >
       <WindFlowers src="/floral/hero-top.webp" edge="top" />
       <WindFlowers src="/floral/hero-bottom.webp" edge="bottom" />
-      <BirdOfParadise src="/floral/bop-a.webp" side="left" />
-      <BirdOfParadise src="/floral/bop-b.webp" side="right" />
+      <BirdOfParadise src="/floral/bop-a.webp?v=2" side="left" />
+      <BirdOfParadise src="/floral/bop-b.webp?v=2" side="right" />
       <Petals />
 
       <motion.div
@@ -1026,7 +1026,6 @@ function BirdOfParadise({ src, side }: { src: string; side: "left" | "right" }) 
           width: "100%",
           height: "auto",
           display: "block",
-          mixBlendMode: "multiply",
           transform: side === "right" ? "scaleX(-1)" : undefined,
           WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 18%)",
           maskImage: "linear-gradient(to top, transparent 0%, black 18%)",

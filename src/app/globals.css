@@ -318,7 +318,7 @@ body {
 @keyframes bopSway{from{rotate:-2.5deg}to{rotate:2.5deg}}
 .ring-photo-glow{position:absolute;inset:-16px;border-radius:999px;background:conic-gradient(from 0deg,#D41F7F,#C2410C,#F8B91A,#7F8B4E,#D41F7F);filter:blur(16px);opacity:.45;animation:spinHue 9s linear infinite}
 /* Loader v3 */
-.ld-flor{position:absolute;height:auto;opacity:0;mix-blend-mode:multiply;will-change:transform;animation:roseBloom 1.9s cubic-bezier(.22,1,.36,1) forwards,roseSway 6s 2s ease-in-out infinite alternate}
+.ld-flor{position:absolute;height:auto;opacity:0;will-change:transform;animation:roseBloom 1.9s cubic-bezier(.22,1,.36,1) forwards,roseSway 6s 2s ease-in-out infinite alternate}
 .ld-tl{top:-1%;left:-2%;width:min(46vw,260px);transform-origin:0 0;--r:-12deg}
 .ld-tr{top:-1%;right:-2%;width:min(46vw,260px);transform-origin:100% 0;--r:12deg;animation-delay:.15s,2.2s}
 .ld-bl{bottom:-2%;left:-8%;width:min(40vw,230px);transform-origin:50% 100%;--r:-10deg;animation-delay:.35s,2.4s;-webkit-mask-image:linear-gradient(to top,transparent 0,#000 16%);mask-image:linear-gradient(to top,transparent 0,#000 16%)}
