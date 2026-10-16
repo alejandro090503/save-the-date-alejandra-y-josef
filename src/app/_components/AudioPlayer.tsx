@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
+import { useT } from "./i18n";
 
 export interface AudioAPI {
   play: () => void;
 }
 
 const AudioPlayer = forwardRef<AudioAPI>(function AudioPlayer(_props, ref) {
+  const tr = useT();
   const [playing, setPlaying] = useState(false);
   const [visible, setVisible] = useState(true);
   const [hint, setHint] = useState(false);
@@ -66,8 +68,8 @@ const AudioPlayer = forwardRef<AudioAPI>(function AudioPlayer(_props, ref) {
       />
       <div className={`music-dock ${playing ? "is-playing" : ""} ${touched ? "is-touched" : ""}`}>
         <span className={`music-hint ${hint && !playing ? "show" : ""}`} aria-hidden="true">
-          <em>Nuestra canción</em>
-          <small>toca para escuchar</small>
+          <em>{tr.song}</em>
+          <small>{tr.songTap}</small>
         </span>
         <button
           onClick={toggle}

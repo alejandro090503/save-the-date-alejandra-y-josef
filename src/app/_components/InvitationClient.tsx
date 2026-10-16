@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useT } from "./i18n";
 import { motion, useScroll, useTransform, useReducedMotion, type Variants } from "framer-motion";
 
 /* Paleta del cliente (moodboard del taller floral): fucsia #D41F7F, rosa #F08CA0,
@@ -17,8 +18,8 @@ const C = {
   sageLight: "#7F8B4E",
   olive: "#9A6700",       // amarillo/mostaza profundo
   oliveLight: "#F8B91A",  // amarillo vivo — SOLO decorativo
-  mauve: "#C2456A",       // rosa profundo
-  mauveLight: "#F08CA0",
+  mauve: "#5F6B33",       // olivo (antes rosa)
+  mauveLight: "#C9A227",  // dorado (antes rosa claro)
   charcoal: "#2C2C2C",
   gray: "#5F5F5F",
   softGray: "#6B6B6B",
@@ -28,6 +29,7 @@ const C = {
 
 /* ─── Countdown ─── */
 function Countdown() {
+  const t = useT();
   const target = new Date("2027-07-17T12:30:00-06:00").getTime();
   const [now, setNow] = useState(target);
 
@@ -44,10 +46,10 @@ function Countdown() {
   const secs = Math.floor((diff % 60000) / 1000);
 
   const units = [
-    { val: days, label: "Días" },
-    { val: hours, label: "Horas" },
-    { val: mins, label: "Min" },
-    { val: secs, label: "Seg" },
+    { val: days, label: t.cd[0] },
+    { val: hours, label: t.cd[1] },
+    { val: mins, label: t.cd[2] },
+    { val: secs, label: t.cd[3] },
   ];
 
   return (
@@ -71,7 +73,8 @@ function Countdown() {
               style={{
                 fontFamily: "var(--font-heading)",
                 fontStyle: "italic",
-                fontSize: 10,
+                fontSize: 14,
+                fontWeight: 600,
                 color: C.gray,
                 letterSpacing: "0.06em",
                 marginTop: 8,
@@ -289,6 +292,7 @@ function SectionBg({ src, opacity = 0.55, parallax = false, drift = 40 }: { src:
    ═══════════════════════════════════════════════════════ */
 function Hero() {
   const reduce = useReducedMotion();
+  const t = useT();
   return (
     <section
       className="flex flex-col items-center text-center"
@@ -306,6 +310,8 @@ function Hero() {
     >
       <WindFlowers src="/floral/hero-top.webp" edge="top" />
       <WindFlowers src="/floral/hero-bottom.webp" edge="bottom" />
+      <BirdOfParadise src="/floral/bop-a.webp" side="left" />
+      <BirdOfParadise src="/floral/bop-b.webp" side="right" />
       <Petals />
 
       <motion.div
@@ -317,16 +323,16 @@ function Hero() {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontWeight: 600,
-          fontSize: 12,
-          letterSpacing: "0.42em",
+          fontWeight: 700,
+          fontSize: 15,
+          letterSpacing: "0.36em",
           textTransform: "uppercase",
           color: C.wine,
           margin: "0 0 clamp(18px, 4vw, 28px)",
           paddingLeft: "0.42em",
         }}
       >
-        Save the Date
+        {t.std}
       </p>
 
       {/* Nombres apilados */}
@@ -334,7 +340,7 @@ function Hero() {
         style={{
           fontFamily: "var(--font-script)",
           fontWeight: 400,
-          fontSize: "clamp(4.4rem, 21vw, 8.5rem)",
+          fontSize: "clamp(4.2rem, 19vw, 8rem)",
           letterSpacing: "0",
           color: C.wineDeep,
           lineHeight: 1.05,
@@ -365,7 +371,7 @@ function Hero() {
         style={{
           fontFamily: "var(--font-script)",
           fontWeight: 400,
-          fontSize: "clamp(4.4rem, 21vw, 8.5rem)",
+          fontSize: "clamp(4.2rem, 19vw, 8rem)",
           letterSpacing: "0",
           color: C.wineDeep,
           lineHeight: 1.05,
@@ -381,9 +387,9 @@ function Hero() {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontWeight: 500,
-          fontSize: "clamp(9px, 2.2vw, 11px)",
-          letterSpacing: "0.22em",
+          fontWeight: 700,
+          fontSize: "clamp(13px, 3.6vw, 15px)",
+          letterSpacing: "0.2em",
           textTransform: "uppercase",
           color: C.charcoal,
           lineHeight: 1.9,
@@ -393,9 +399,9 @@ function Hero() {
           marginBottom: 0,
         }}
       >
-        Reserva la fecha para
+        {t.reserve1}
         <br />
-        nuestra boda
+        {t.reserve2}
       </p>
 
       {/* Fecha grande */}
@@ -411,7 +417,7 @@ function Hero() {
             margin: 0,
           }}
         >
-          JULIO 17
+          {t.month}
         </p>
         <p
           style={{
@@ -444,16 +450,16 @@ function Hero() {
       <p
         style={{
           fontFamily: "var(--font-heading)",
-          fontStyle: "italic",
-          fontWeight: 400,
-          fontSize: "clamp(12px, 3vw, 15px)",
-          color: C.gray,
+          fontWeight: 700,
+          fontSize: "clamp(24px, 7vw, 34px)",
+          letterSpacing: "0.04em",
+          color: C.wineDeep,
           textAlign: "center",
           marginTop: "clamp(14px, 2.5vw, 20px)",
           marginBottom: "clamp(16px, 3vw, 24px)",
         }}
       >
-        Ciudad de México
+        {t.city}
       </p>
 
       <Countdown />
@@ -538,6 +544,7 @@ function SectionTitle({ eyebrow, title, tone }: { eyebrow?: string; title: strin
    FRASE — cita romántica destacada
    ═══════════════════════════════════════════════════════ */
 function Frase() {
+  const t = useT();
   return (
     <Section style={{ paddingTop: 88, paddingBottom: 88, position: "relative", overflow: "hidden" }}>
       <SectionBg src="/floral/bg-frase.webp" opacity={0.5} parallax drift={50} />
@@ -561,9 +568,9 @@ function Frase() {
               margin: 0,
             }}
           >
-            &ldquo;Y así, sin buscarnos,
+            &ldquo;{t.quote1}
             <br />
-            nos encontramos para siempre&rdquo;
+            {t.quote2}&rdquo;
           </p>
         </RevealItem>
         <RevealItem>
@@ -578,6 +585,7 @@ function Frase() {
    MENSAJE
    ═══════════════════════════════════════════════════════ */
 function Mensaje() {
+  const t = useT();
   return (
     <Section style={{ paddingBottom: 20 }}>
       <Reveal style={{ maxWidth: 460, margin: "0 auto" }}>
@@ -593,9 +601,7 @@ function Mensaje() {
               textAlign: "center",
             }}
           >
-            Estamos muy felices de compartirte que nos casamos.
-            Aparta este día en tu calendario; muy pronto recibirás la invitación formal
-            con todos los detalles
+            {t.msg}
           </p>
         </RevealItem>
         <RevealItem style={{ marginTop: 18 }}>
@@ -611,7 +617,7 @@ function Mensaje() {
               margin: 0,
             }}
           >
-            ¡Te esperamos!
+            {t.wait}
           </p>
         </RevealItem>
       </Reveal>
@@ -669,6 +675,7 @@ function PhotoDivider({ src, aspect = "16 / 10", tone = C.gold, delay = 0 }: { s
    FOOTER
    ═══════════════════════════════════════════════════════ */
 function Footer() {
+  const t = useT();
   return (
     <section
       className="text-center"
@@ -689,7 +696,7 @@ function Footer() {
             <div className="arch-ring" />
             <div style={{ position: "relative", aspectRatio: "3 / 4", borderRadius: "999px 999px 14px 14px", overflow: "hidden", border: "6px solid #fffdf9", boxShadow: "0 20px 44px -14px rgba(140,17,73,.45)" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/fotos/foto5.webp" alt="Alejandra y Josef" loading="lazy" className="photo-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%", display: "block" }} />
+              <img src="/fotos/beso-arbol.webp" alt="Alejandra y Josef" loading="lazy" className="photo-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", display: "block" }} />
               <div className="photo-sheen" />
             </div>
           </div>
@@ -749,7 +756,7 @@ function Footer() {
               textAlign: "center",
             }}
           >
-            17 · Julio · 2027
+            {t.footerDate}
           </p>
 
           <p
@@ -763,7 +770,7 @@ function Footer() {
               marginTop: 8,
             }}
           >
-            Ciudad de México
+            {t.city}
           </p>
 
           <a
@@ -800,18 +807,19 @@ function Footer() {
 
 /* Calendario julio 2027 con el 17 marcado */
 function Calendario() {
+  const t = useT();
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const lead = 4; // 1 jul 2027 = jueves (L M M J V S D)
   return (
     <Section style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: "clamp(170px, 34vw, 230px)" }}>
-      <WindFlowers src="/floral/bottom-band.webp" edge="bottom" height="clamp(170px, 34vw, 230px)" opacity={0.9} inView />
+      <WindFlowers src="/floral/cal-band.webp" edge="bottom" height="clamp(170px, 34vw, 230px)" opacity={0.9} inView />
       <Reveal style={{ position: "relative", zIndex: 1, maxWidth: 340, margin: "0 auto" }}>
         <RevealItem>
-          <SectionTitle eyebrow="Sábado" title="JULIO 2027" tone={C.gold} />
+          <SectionTitle eyebrow={t.calEyebrow} title={t.calTitle} tone={C.gold} />
         </RevealItem>
         <RevealItem>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 6, fontFamily: "var(--font-body)" }}>
-            {["L", "M", "M", "J", "V", "S", "D"].map((d, i) => (
+            {t.week.map((d, i) => (
               <span key={"h" + i} style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.1em", color: C.wine, paddingBottom: 6 }}>{d}</span>
             ))}
             {Array.from({ length: lead - 1 }).map((_, i) => <span key={"e" + i} />)}
@@ -841,6 +849,16 @@ function Calendario() {
             ))}
           </div>
         </RevealItem>
+        <RevealItem style={{ marginTop: 34 }}>
+          <div className="photo-float" style={{ animationDelay: "0.8s", width: "min(220px, 58vw)", margin: "0 auto", position: "relative" }}>
+            <div className="ring-photo-glow" />
+            <div style={{ position: "relative", aspectRatio: "4 / 5", borderRadius: 999, overflow: "hidden", border: "5px solid #fffdf9", boxShadow: "0 18px 40px -14px rgba(140,17,73,.45)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/fotos/anillo.webp" alt="" loading="lazy" className="photo-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 55%", display: "block" }} />
+              <div className="photo-sheen" />
+            </div>
+          </div>
+        </RevealItem>
       </Reveal>
     </Section>
   );
@@ -854,7 +872,7 @@ export function InvitationClient() {
     <main style={{ backgroundColor: C.cream, width: "100%", position: "relative", isolation: "isolate" }}>
       <AuraBg />
       <Hero />
-      <PhotoDivider src="/fotos/foto1.webp" aspect="4 / 5" tone={C.wine} />
+      <PhotoDivider src="/fotos/nueva-arbol.webp" aspect="4 / 5" tone={C.wine} />
       <Frase />
       <Calendario />
       <PhotoDivider src="/fotos/foto4.webp" aspect="4 / 5" tone={C.gold} delay={1.4} />
@@ -868,7 +886,7 @@ export function InvitationClient() {
 /* Fondo vivo: esferas difuminadas de la paleta que derivan lentamente (fijo detrás de todo) */
 function AuraBg() {
   const blobs = [
-    { c: "#F08CA0", s: 62, x: "-12%", y: "4%", d: 22 },
+    { c: "#E2A11B", s: 62, x: "-12%", y: "4%", d: 22 },
     { c: "#F8B91A", s: 48, x: "62%", y: "18%", d: 26 },
     { c: "#D41F7F", s: 44, x: "8%", y: "58%", d: 30 },
     { c: "#EE4E22", s: 40, x: "70%", y: "70%", d: 24 },
@@ -960,7 +978,7 @@ function WindFlowers({ src, edge, height, opacity = 1, inView = false }: { src: 
 function Petals() {
   const reduce = useReducedMotion();
   if (reduce) return null;
-  const colors = ["#F08CA0", "#D41F7F", "#F8B91A", "#EE4E22", "#F5B6C4"];
+  const colors = ["#F8B91A", "#D41F7F", "#E2A11B", "#C2410C", "#7F8B4E"];
   return (
     <div aria-hidden="true" style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 1 }}>
       {Array.from({ length: 12 }).map((_, i) => (
@@ -978,5 +996,42 @@ function Petals() {
         />
       ))}
     </div>
+  );
+}
+
+/* Ave del paraíso (acuarela) que crece desde la base del hero y se mece */
+function BirdOfParadise({ src, side }: { src: string; side: "left" | "right" }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      aria-hidden="true"
+      initial={reduce ? undefined : { opacity: 0, y: 60, rotate: side === "left" ? -8 : 8 }}
+      animate={reduce ? undefined : { opacity: 1, y: 0, rotate: 0 }}
+      transition={{ duration: 1.8, delay: side === "left" ? 0.6 : 0.85, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        position: "absolute",
+        bottom: -10,
+        [side]: "-6%",
+        width: "clamp(120px, 34vw, 230px)",
+        zIndex: 0,
+        pointerEvents: "none",
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        className={reduce ? undefined : `bop-sway bop-${side}`}
+        style={{
+          width: "100%",
+          height: "auto",
+          display: "block",
+          mixBlendMode: "multiply",
+          transform: side === "right" ? "scaleX(-1)" : undefined,
+          WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 18%)",
+          maskImage: "linear-gradient(to top, transparent 0%, black 18%)",
+        }}
+      />
+    </motion.div>
   );
 }

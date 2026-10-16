@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Great_Vibes, Inter, Dancing_Script } from "next/font/google";
+import { Cormorant_Garamond, Parisienne, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-heading",
   display: "swap",
 });
 
-const greatVibes = Great_Vibes({
+const parisienne = Parisienne({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-script",
@@ -24,12 +24,7 @@ const dancingScript = Dancing_Script({
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-body",
-  display: "swap",
-});
+
 
 export const metadata: Metadata = {
   title: "Save the Date · Alejandra & Josef — 17 Julio 2027",
@@ -60,7 +55,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${cormorant.variable} ${greatVibes.variable} ${dancingScript.variable} ${inter.variable}`}>
+    <html lang="es" className={`${cormorant.variable} ${parisienne.variable} ${dancingScript.variable}`}>
       <body className="min-h-screen">{children}</body>
     </html>
   );

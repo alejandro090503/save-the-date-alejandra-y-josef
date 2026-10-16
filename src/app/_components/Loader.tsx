@@ -3,17 +3,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import AudioPlayer, { AudioAPI } from "./AudioPlayer";
+import { LangCtx, type Lang } from "./i18n";
 
-/* Loader de entrada: flores que crecen desde arriba y abajo, monograma en Great Vibes
-   que se revela con un trazo de luz, fecha y línea de progreso. Al terminar invita a
-   tocar (gesto = desbloquea la música) y se abre como telón hacia arriba y abajo. */
+/* Loader de entrada: aves del paraíso y flores amarillas (moodboard del cliente) que
+   florecen desde las esquinas + pradera abajo, nombres completos en Parisienne,
+   fecha, y elección de idioma (el toque desbloquea la música y abre el telón). */
 export function Loader({ children }: { children: React.ReactNode }) {
   const audio = useRef<AudioAPI>(null);
+  const [lang, setLang] = useState<Lang>("es");
   const [ready, setReady] = useState(false);
   const [opening, setOpening] = useState(false);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem("std-lang");
+      if (saved === "en" || saved === "es") setLang(saved);
+      else if (navigator.language?.toLowerCase().startsWith("en")) setLang("en");
+    } catch {}
     document.documentElement.style.overflow = "hidden";
     let loaded = document.readyState === "complete";
     let timeUp = false;
@@ -25,8 +32,15 @@ export function Loader({ children }: { children: React.ReactNode }) {
     return () => { window.removeEventListener("load", onLoad); clearTimeout(t); clearTimeout(failsafe); };
   }, []);
 
-  const enter = () => {
+  const choose = (l: Lang) => {
+    setLang(l);
+    try { localStorage.setItem("std-lang", l); } catch {}
+    document.documentElement.lang = l;
+  };
+
+  const enter = (l: Lang) => {
     if (!ready || opening) return;
+    choose(l);
     audio.current?.play();
     setOpening(true);
     setTimeout(() => {
@@ -37,25 +51,20 @@ export function Loader({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <>
+    <LangCtx.Provider value={{ lang, setLang: choose }}>
       <AudioPlayer ref={audio} />
       {children}
+      {gone && <LangToggle />}
       {!gone && (
-        <div
-          className={`ld ${ready ? "is-ready" : ""} ${opening ? "is-opening" : ""}`}
-          onClick={enter}
-          role="button"
-          tabIndex={0}
-          aria-label="Toca para abrir el Save the Date"
-          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && enter()}
-        >
+        <div className={`ld ${ready ? "is-ready" : ""} ${opening ? "is-opening" : ""}`}>
           <div className="ld-half ld-top">
-            <img className="ld-rose ld-tl" src="/floral/ld-tl.webp?v=3" alt="" />
-            <img className="ld-rose ld-tr" src="/floral/ld-tr.webp?v=3" alt="" />
+            <img className="ld-flor ld-tl" src="/floral/yel-c-l.webp" alt="" />
+            <img className="ld-flor ld-tr" src="/floral/yel-c.webp" alt="" />
           </div>
           <div className="ld-half ld-bottom">
-            <img className="ld-rose ld-bl" src="/floral/ld-bl.webp?v=3" alt="" />
-            <img className="ld-rose ld-br" src="/floral/ld-br.webp?v=3" alt="" />
+            <div className="ld-meadow" />
+            <img className="ld-flor ld-bl" src="/floral/bop-a.webp" alt="" />
+            <img className="ld-flor ld-br" src="/floral/bop-b.webp" alt="" />
           </div>
           <div className="ld-sparkles" aria-hidden="true">
             {Array.from({ length: 14 }).map((_, i) => (
@@ -67,20 +76,45 @@ export function Loader({ children }: { children: React.ReactNode }) {
           </div>
           <div className="ld-center">
             <p className="ld-eyebrow">Save the Date</p>
-            <p className="ld-mono">
-              <span>A</span>
+            <h1 className="ld-names">
+              <span className="ld-n1">Alejandra</span>
               <em>&amp;</em>
-              <span>J</span>
-            </p>
+              <span className="ld-n2">Josef</span>
+            </h1>
             <p className="ld-date">17 · 07 · 2027</p>
             <div className="ld-bar"><i /></div>
-            <p className="ld-tap">
-              <span className="ld-tap-dot" />
-              Toca para abrir
-            </p>
+            <div className="ld-lang">
+              <button type="button" onClick={() => enter("es")}>
+                <span className="ld-tap-dot" />Español
+              </button>
+              <span className="ld-lang-sep" />
+              <button type="button" onClick={() => enter("en")}>
+                English<span className="ld-tap-dot" />
+              </button>
+            </div>
+            <p className="ld-tap">Toca tu idioma · Tap your language</p>
           </div>
         </div>
       )}
-    </>
+    </LangCtx.Provider>
+  );
+}
+
+function LangToggle() {
+  return (
+    <LangCtx.Consumer>
+      {({ lang, setLang }) => (
+        <button
+          type="button"
+          className="lang-toggle"
+          onClick={() => setLang(lang === "es" ? "en" : "es")}
+          aria-label={lang === "es" ? "Switch to English" : "Cambiar a español"}
+        >
+          <span className={lang === "es" ? "on" : ""}>ES</span>
+          <i />
+          <span className={lang === "en" ? "on" : ""}>EN</span>
+        </button>
+      )}
+    </LangCtx.Consumer>
   );
 }
