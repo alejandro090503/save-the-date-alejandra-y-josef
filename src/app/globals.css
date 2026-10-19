@@ -355,3 +355,7 @@ body {
 .ld-band-bottom{bottom:0;background-image:url(/floral/hero-bottom.webp);background-position:center bottom;transform-origin:bottom center;animation-delay:.25s;-webkit-mask-image:linear-gradient(to top,#000 50%,transparent);mask-image:linear-gradient(to top,#000 50%,transparent)}
 .ld-birds{opacity:0;animation:ldFade 1.4s .8s ease forwards}
 @media (prefers-reduced-motion: reduce){.bird{animation:none!important}}
+
+/* v5: aves arriba volteadas (cuelgan del follaje) + par abajo derecho */
+.bird-pair--top{top:-6px!important;transform:scaleY(-1)}
+.bird-pair--bottom{left:4%;right:auto}

@@ -66,6 +66,10 @@ export function Loader({ children }: { children: React.ReactNode }) {
           </div>
           <div className="ld-half ld-bottom">
             <div className="ld-band ld-band-bottom" />
+            <div className="bird-pair bird-pair--bottom ld-birds">
+              <img src="/floral/bop-a.webp?v=2" alt="" className="bird bird-1" />
+              <img src="/floral/bop-b.webp?v=2" alt="" className="bird bird-2" />
+            </div>
           </div>
           <div className="ld-sparkles" aria-hidden="true">
             {Array.from({ length: 14 }).map((_, i) => (

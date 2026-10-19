@@ -311,6 +311,7 @@ function Hero() {
       <BirdPair edge="top" />
       <WindFlowers src="/floral/hero-top.webp" edge="top" />
       <WindFlowers src="/floral/hero-bottom.webp" edge="bottom" />
+      <BirdPair edge="bottom" />
       <Petals />
 
       <motion.div
