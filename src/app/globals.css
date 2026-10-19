@@ -342,3 +342,16 @@ body {
 .lang-toggle .on{color:#8C1149}
 .lang-toggle i{width:1px;height:14px;background:rgba(140,17,73,.3)}
 @media (prefers-reduced-motion: reduce){.bop-sway,.ring-photo-glow{animation:none!important}}
+
+/* ===== v4: sin amarillos; aves del paraíso juntas como acento, uniformes ===== */
+.bird-pair{position:absolute;right:4%;width:clamp(120px,32vw,200px);height:clamp(150px,40vw,250px);pointer-events:none;z-index:0}
+.bird-pair--top{top:clamp(26px,5vh,46px)}
+.bird-pair--bottom{bottom:clamp(40px,8vw,70px)}
+.bird{position:absolute;bottom:0;width:72%;height:auto;transform-origin:50% 100%;animation:bopSway 6.5s ease-in-out infinite alternate}
+.bird-1{left:0;rotate:-10deg}
+.bird-2{right:0;transform:scaleX(-1);animation-duration:7.6s;animation-delay:-2.4s;width:64%}
+.ld-band{position:absolute;left:-4%;right:-4%;height:min(34vh,300px);background-size:cover;mix-blend-mode:multiply;animation:ldGrow 2.1s cubic-bezier(.22,1,.36,1) both}
+.ld-band-top{top:0;background-image:url(/floral/hero-top.webp);background-position:center top;transform-origin:top center;-webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent);mask-image:linear-gradient(to bottom,#000 50%,transparent)}
+.ld-band-bottom{bottom:0;background-image:url(/floral/hero-bottom.webp);background-position:center bottom;transform-origin:bottom center;animation-delay:.25s;-webkit-mask-image:linear-gradient(to top,#000 50%,transparent);mask-image:linear-gradient(to top,#000 50%,transparent)}
+.ld-birds{opacity:0;animation:ldFade 1.4s .8s ease forwards}
+@media (prefers-reduced-motion: reduce){.bird{animation:none!important}}

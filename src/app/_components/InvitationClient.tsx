@@ -308,10 +308,9 @@ function Hero() {
         paddingRight: 24,
       }}
     >
+      <BirdPair edge="top" />
       <WindFlowers src="/floral/hero-top.webp" edge="top" />
       <WindFlowers src="/floral/hero-bottom.webp" edge="bottom" />
-      <BirdOfParadise src="/floral/bop-a.webp?v=2" side="left" />
-      <BirdOfParadise src="/floral/bop-b.webp?v=2" side="right" />
       <Petals />
 
       <motion.div
@@ -686,6 +685,7 @@ function Footer() {
         padding: "76px 24px clamp(150px, 34vw, 260px)",
       }}
     >
+      <BirdPair edge="bottom" />
       <WindFlowers src="/floral/bg-footer.webp" edge="bottom" height="clamp(170px, 38vw, 300px)" opacity={0.75} inView />
 
       <div style={{ position: "relative", zIndex: 1 }}>
@@ -812,6 +812,7 @@ function Calendario() {
   const lead = 4; // 1 jul 2027 = jueves (L M M J V S D)
   return (
     <Section style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: "clamp(170px, 34vw, 230px)" }}>
+      <BirdPair edge="bottom" />
       <WindFlowers src="/floral/cal-band.webp" edge="bottom" height="clamp(170px, 34vw, 230px)" opacity={0.9} inView />
       <Reveal style={{ position: "relative", zIndex: 1, maxWidth: 340, margin: "0 auto" }}>
         <RevealItem>
@@ -999,38 +1000,17 @@ function Petals() {
   );
 }
 
-/* Ave del paraíso (acuarela) que crece desde la base del hero y se mece */
-function BirdOfParadise({ src, side }: { src: string; side: "left" | "right" }) {
-  const reduce = useReducedMotion();
+/* Par de aves del paraíso juntas como acento del follaje (mismo acento en todas las bandas) */
+function BirdPair({ edge }: { edge: "top" | "bottom" }) {
   return (
-    <motion.div
+    <div
       aria-hidden="true"
-      initial={reduce ? undefined : { opacity: 0, y: 60, rotate: side === "left" ? -8 : 8 }}
-      animate={reduce ? undefined : { opacity: 1, y: 0, rotate: 0 }}
-      transition={{ duration: 1.8, delay: side === "left" ? 0.6 : 0.85, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        position: "absolute",
-        bottom: -10,
-        [side]: "-6%",
-        width: "clamp(120px, 34vw, 230px)",
-        zIndex: 0,
-        pointerEvents: "none",
-      }}
+      className={`bird-pair bird-pair--${edge}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt=""
-        className={reduce ? undefined : `bop-sway bop-${side}`}
-        style={{
-          width: "100%",
-          height: "auto",
-          display: "block",
-          transform: side === "right" ? "scaleX(-1)" : undefined,
-          WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 18%)",
-          maskImage: "linear-gradient(to top, transparent 0%, black 18%)",
-        }}
-      />
-    </motion.div>
+      <img src="/floral/bop-a.webp?v=2" alt="" className="bird bird-1" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/floral/bop-b.webp?v=2" alt="" className="bird bird-2" />
+    </div>
   );
 }
