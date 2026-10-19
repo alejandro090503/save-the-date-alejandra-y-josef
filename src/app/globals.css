@@ -357,5 +357,6 @@ body {
 @media (prefers-reduced-motion: reduce){.bird{animation:none!important}}
 
 /* v5: aves arriba volteadas (cuelgan del follaje) + par abajo derecho */
-.bird-pair--top{top:-6px!important;transform:scaleY(-1)}
+.bird-pair--top{top:-6px!important}
+.bird-pair--top .bird{scale:1 -1;bottom:auto;top:0;transform-origin:50% 0}
 .bird-pair--bottom{left:4%;right:auto}

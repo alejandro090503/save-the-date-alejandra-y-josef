@@ -308,8 +308,8 @@ function Hero() {
         paddingRight: 24,
       }}
     >
-      <BirdPair edge="top" />
       <WindFlowers src="/floral/hero-top.webp" edge="top" />
+      <BirdPair edge="top" />
       <WindFlowers src="/floral/hero-bottom.webp" edge="bottom" />
       <BirdPair edge="bottom" />
       <Petals />
